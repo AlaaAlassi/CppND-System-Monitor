@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "linux_parser.h"
 
@@ -73,7 +74,26 @@ float LinuxParser::MemoryUtilization() { return 0.0; }
 long LinuxParser::UpTime() { return 0; }
 
 // TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
+long LinuxParser::Jiffies() { 
+  long sum = 0;
+  std::string line;
+  std::string CPU,jiffies_1;
+  int jiffiesVectorSize = 10;
+  std::ifstream fileBuffer(kProcDirectory + kStatFilename);
+  if(fileBuffer.is_open()){
+  std::getline(fileBuffer, line);
+  std::istringstream linestream(line);
+  linestream >> CPU;
+
+  for (int n=0; n<jiffiesVectorSize; n++)
+  {
+    long val;
+    linestream >> val;
+    sum = sum + val;
+    std::cout << val << " "<< n <<'\n';
+  }
+  }
+  return sum; }
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
