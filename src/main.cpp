@@ -6,7 +6,16 @@
 int main() {
 
   System system;
+  Processor processor;
   //NCursesDisplay::Display(system);
 
-  std::cout << LinuxParser::Jiffies() << "\n";
+  /*std::cout << LinuxParser::Jiffies() << "\n";
+  std::cout << LinuxParser::UpTime()  << "\n";
+  std::cout << processor.Utilization()  << "\n";*/
+  std::vector<std::string> hello = LinuxParser::CpuUtilization() ;
+  for(auto stuff:hello){
+    std::cout << stuff << "\n";
+  }
+  
+  
 }

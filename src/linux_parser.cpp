@@ -10,6 +10,7 @@ using std::stof;
 using std::string;
 using std::to_string;
 using std::vector;
+enum CPU_usage {usertime=0,nicetime=1,systemtime=2,idletime=3,iowait=4,irq=5,softirq=6,steal=7,guest=8,guestnice=9};
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
@@ -125,7 +126,25 @@ long LinuxParser::ActiveJiffies() { return 0; }
 long LinuxParser::IdleJiffies() { return 0; }
 
 // TODO: Read and return CPU utilization
-vector<string> LinuxParser::CpuUtilization() { return {}; }
+vector<string> LinuxParser::CpuUtilization() { 
+  vector<string> CpuUtilizationVector;
+  std::string line;
+  std::string CPU;
+  std::string temp;
+  std::ifstream fileBuffer(kProcDirectory + kStatFilename);
+  if(fileBuffer.is_open()){
+  std::getline(fileBuffer, line);
+  std::istringstream linestream(line);
+  linestream >> CPU;
+    for (int i=CPU_usage::usertime; i<= CPU_usage::guestnice; i++)
+    {
+      linestream >> temp;
+      CpuUtilizationVector.push_back(temp);
+    }
+
+  }
+  return CpuUtilizationVector; 
+}
 
 // TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { return 0; }
