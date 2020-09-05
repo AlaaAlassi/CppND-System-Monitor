@@ -10,7 +10,6 @@ using std::stof;
 using std::string;
 using std::to_string;
 using std::vector;
-enum CPU_usage {usertime=0,nicetime=1,systemtime=2,idletime=3,iowait=4,irq=5,softirq=6,steal=7,guest=8,guestnice=9};
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
@@ -136,7 +135,7 @@ vector<string> LinuxParser::CpuUtilization() {
   std::getline(fileBuffer, line);
   std::istringstream linestream(line);
   linestream >> CPU;
-    for (int i=CPU_usage::usertime; i<= CPU_usage::guestnice; i++)
+    for (int i=CPUStates::kUser_; i<= CPUStates::kGuestNice_; i++)
     {
       linestream >> temp;
       CpuUtilizationVector.push_back(temp);
@@ -145,6 +144,8 @@ vector<string> LinuxParser::CpuUtilization() {
   }
   return CpuUtilizationVector; 
 }
+
+
 
 // TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { return 0; }
