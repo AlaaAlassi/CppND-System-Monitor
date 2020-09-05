@@ -85,33 +85,12 @@ long LinuxParser::UpTime() {
 
 // TODO: Read and return the number of jiffies for the system
 long LinuxParser::Jiffies() { 
-  long totaltime =0;
-  std::string line;
-  std::string CPU;
-  std::ifstream fileBuffer(kProcDirectory + kStatFilename);
-  if(fileBuffer.is_open()){
-  std::getline(fileBuffer, line);
-  std::istringstream linestream(line);
-  long usertime,nicetime,systemtime,idletime,iowait,irq,softirq,steal,guest ,guestnice;
-  linestream >> CPU;
-  linestream >> usertime;
-  linestream >> nicetime;
-  linestream >> systemtime;
-  linestream >> idletime;
-  linestream >> iowait;
-  linestream >> irq;
-  linestream >> softirq;
-  linestream >> steal;
-  linestream >> guest;
-  linestream >> guestnice;
-  usertime = usertime - guest;                     
-  nicetime = nicetime - guestnice;                 
-  long idlealltime = idletime + iowait;                 
-  long systemalltime = systemtime + irq + softirq;
-  long virtalltime = guest + guestnice;
-  totaltime = usertime + nicetime + systemalltime + idlealltime + steal + virtalltime;
+  long sum = 0;
+  std::vector<std::string> CpuUtilizationS = LinuxParser::CpuUtilization();
+  for(auto i:CpuUtilizationS){
+     sum = sum + std::stol(i);
   }
-  return totaltime;
+  return sum;
  }
 
 // TODO: Read and return the number of active jiffies for a PID
@@ -119,7 +98,18 @@ long LinuxParser::Jiffies() {
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
+long LinuxParser::ActiveJiffies() {
+  long activeJiffies;
+  std::vector<long> CpuUtilizationL;
+  std::vector<std::string> CpuUtilizationS = LinuxParser::CpuUtilization();
+  for(auto i:CpuUtilizationS){
+     CpuUtilizationL.push_back (std::stol(i));
+  }
+ activeJiffies = CpuUtilizationL[CPUStates::kUser_]+ CpuUtilizationL[CPUStates::kNice_]+
+ CpuUtilizationL[CPUStates::kSystem_]+ CpuUtilizationL[CPUStates::kIRQ_]+
+ CpuUtilizationL[CPUStates::kSoftIRQ_] + CpuUtilizationL[CPUStates::kSteal_]+
+ CpuUtilizationL[CPUStates::kGuest_] + CpuUtilizationL[CPUStates::kGuestNice_];
+   return activeJiffies; }
 
 // TODO: Read and return the number of idle jiffies for the system
 long LinuxParser::IdleJiffies() { return 0; }
