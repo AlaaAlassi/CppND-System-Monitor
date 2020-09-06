@@ -71,18 +71,18 @@ vector<int> LinuxParser::Pids() {
 float LinuxParser::MemoryUtilization() { 
   float total;
   float free;
-  std::string filed;
+  std::string field;
   std::string line;
   std::ifstream fileBuffer(kProcDirectory + kMeminfoFilename);
   if(fileBuffer.is_open()){
     for(int i=0; i<2; i++){
       std::getline(fileBuffer, line);
       std::istringstream linestream(line);
-      linestream >> filed;
-      if ( filed == "MemTotal:"){
+      linestream >> field;
+      if ( field == "MemTotal:"){
         linestream >> total;
       }
-      if ( filed == "MemFree:"){
+      if ( field == "MemFree:"){
         linestream >> free;
       }
     }
@@ -158,7 +158,27 @@ vector<string> LinuxParser::CpuUtilization() {
 
 
 // TODO: Read and return the total number of processes
-int LinuxParser::TotalProcesses() { return 0; }
+int LinuxParser::TotalProcesses() {
+  std::ifstream fileBuffer(kProcDirectory + kStatFilename);
+  std::string line;
+  std::string field;
+  int numberOfProcesses;
+  int maxIterations = 100;
+  if (fileBuffer.is_open())
+  {
+    for(int i=0; i<maxIterations;i++)
+    {
+      std::getline(fileBuffer,line);
+      std::istringstream linestream(line);
+      linestream >> field;
+      if(field == "processes"){
+        linestream >> numberOfProcesses;
+      }
+    }
+
+  }
+  
+   return numberOfProcesses; }
 
 // TODO: Read and return the number of running processes
 int LinuxParser::RunningProcesses() { return 0; }

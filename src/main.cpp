@@ -6,13 +6,15 @@
 int main() {
 
   System system;
-  Processor processor;
   NCursesDisplay::Display(system);
+
 
   //std::cout << LinuxParser::Jiffies() << "\n";
   //std::cout << LinuxParser::UpTime()  << "\n";
   //std::cout << processor.Utilization()  << "\n";
   //std::cout << LinuxParser::MemoryUtilization();
-  
+  //LinuxParser::TotalProcesses()
+  //std::cout << LinuxParser::TotalProcesses();
+
   
 }
