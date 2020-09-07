@@ -173,9 +173,9 @@ int LinuxParser::TotalProcesses() {
       linestream >> field;
       if(field == "processes"){
         linestream >> numberOfProcesses;
+        break;
       }
     }
-
   }
   
    return numberOfProcesses; }
