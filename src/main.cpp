@@ -7,8 +7,6 @@ int main() {
 
   System system;
   NCursesDisplay::Display(system);
-
-
   //std::cout << LinuxParser::Jiffies() << "\n";
   //std::cout << LinuxParser::UpTime()  << "\n";
   //std::cout << processor.Utilization()  << "\n";
