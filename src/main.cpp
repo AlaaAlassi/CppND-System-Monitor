@@ -4,7 +4,7 @@
 #include <iostream>
 
 int main() {
-  std::vector<Process> processes;
+ std::vector<Process> processes;
   std::vector<int> pidVector = LinuxParser::Pids();
         for (auto pid:pidVector){
          processes.push_back(Process(pid));
@@ -12,12 +12,15 @@ int main() {
   System system;
   system.SetProcesses(processes);
   NCursesDisplay::Display(system,100);
+
   //std::cout << LinuxParser::Jiffies() << "\n";
   //std::cout << LinuxParser::UpTime()  << "\n";
   //std::cout << processor.Utilization()  << "\n";
   //std::cout << LinuxParser::MemoryUtilization();
   //LinuxParser::TotalProcesses()
-  //std::cout << LinuxParser::TotalProcesses();
+  //LinuxParser::User(9188);
+  
+
 
   
 }

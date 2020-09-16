@@ -213,11 +213,58 @@ string LinuxParser::Ram(int pid[[maybe_unused]]) { return string(); }
 
 // TODO: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Uid(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::Uid(int pid) {
+  std::string kprocessDirectory = "/"+std::to_string(pid);
+  std::ifstream fileBuffer(kProcDirectory +kprocessDirectory+kStatusFilename);
+  std::string line;
+  std::string field;
+  int UID;
+  int maxIterations = 100;
+  if (fileBuffer.is_open())
+  {
+    for(int i=0; i<maxIterations;i++)
+    {
+      std::getline(fileBuffer,line);
+      std::istringstream linestream(line);
+      linestream >> field;
+      if(field == "Uid:"){
+        linestream >> UID;
+        break;
+      }
+    }
+  }
+  
+  return std::to_string(UID); 
+}
 
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::User(int pid) { 
+  std::ifstream fileBuffer(kPasswordPath);
+  std::string line;
+  std::string token;
+  std::string delimiter = ":x:";
+  std::string delimiter2 = ":";
+  std::string Uid = LinuxParser::Uid(pid);
+  std::string username = "non";
+int maxIterations = 100;
+  if (fileBuffer.is_open())
+  {
+    for(int i=0; i<maxIterations;i++)
+    {
+      std::getline(fileBuffer,line);
+      std::istringstream linestream(line);
+      if (line.size() == 0){break;}
+      username = line.substr(0,line.find(delimiter));
+      line.erase(0,username.length() + delimiter.length());
+      token = line.substr(0,line.find(delimiter2));
+      if (token == Uid){
+       return username;
+        }
+      }
+    }
+ return username;
+}
 
 // TODO: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
