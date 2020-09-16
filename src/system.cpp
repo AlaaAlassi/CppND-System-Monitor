@@ -14,6 +14,10 @@ using std::size_t;
 using std::string;
 using std::vector;
 
+void System::SetProcesses(std::vector<Process> processes){
+  processes_ = processes;
+}
+
 // TODO: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
