@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cmath>
+#include"format.h"
 
 #include "linux_parser.h"
 
@@ -219,7 +221,28 @@ string LinuxParser::Command(int pid) {
 
 // TODO: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Ram(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::Ram(int pid) { 
+  std::string kprocessDirectory = "/"+std::to_string(pid);
+  std::ifstream fileBuffer(kProcDirectory+kprocessDirectory+kStatusFilename);
+  std::string line;
+  std::string field;
+  float ramUsage;
+  int maxIterations = 100;
+  if (fileBuffer.is_open())
+  {
+    for(int i=0; i<maxIterations;i++)
+    {
+      std::getline(fileBuffer,line);
+      std::istringstream linestream(line);
+      linestream >> field;
+      if(field == "VmSize:"){
+        linestream >> ramUsage;
+        break;
+      }
+    }
+  }
+  return (Format::KBisMB(ramUsage));
+   }
 
 // TODO: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function

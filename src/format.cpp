@@ -34,3 +34,12 @@ string Format::ElapsedTime(long seconds) {
 
   return ss.str();
 }
+
+std::string Format::KBisMB(float kiloB) {
+  
+  float megaB = kiloB / 1024;
+  std::stringstream ss;
+  ss << std::fixed << std::setprecision(1) << megaB;
+
+  return ss.str();
+}

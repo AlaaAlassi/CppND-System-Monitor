@@ -10,12 +10,12 @@ int main() {
          processes.push_back(Process(pid));
         }
 
-  std::vector<Process>::const_iterator first = processes.begin() + 1000;
-  std::vector<Process>::const_iterator last = processes.begin() + 1020;
+  std::vector<Process>::const_iterator first = processes.begin() + 300;
+  std::vector<Process>::const_iterator last = processes.begin() + 320;
   std::vector<Process> subProc(first, last);
   System system;
-  system.SetProcesses(processes);
-  NCursesDisplay::Display(system,100);
+  system.SetProcesses(subProc);
+  NCursesDisplay::Display(system,20);
 
   //std::cout <<  LinuxParser::Command(2879)  << "\n";
   
