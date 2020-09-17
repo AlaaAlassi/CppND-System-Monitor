@@ -205,7 +205,17 @@ int LinuxParser::RunningProcesses() {
 
 // TODO: Read and return the command associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Command(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::Command(int pid) {
+  std::string kprocessDirectory = "/"+std::to_string(pid);
+  std::ifstream fileBuffer(kProcDirectory +kprocessDirectory+kCmdlineFilename);
+  std::string line;
+  std::string field;
+  if (fileBuffer.is_open())
+  {
+      std::getline(fileBuffer,line);
+  }
+  return line; 
+  }
 
 // TODO: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
@@ -259,7 +269,7 @@ int maxIterations = 100;
       line.erase(0,username.length() + delimiter.length());
       token = line.substr(0,line.find(delimiter2));
       if (token == Uid){
-       return username;
+       break;
         }
       }
     }
