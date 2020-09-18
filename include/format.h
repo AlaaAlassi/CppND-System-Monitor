@@ -5,7 +5,7 @@
 
 namespace Format {
 std::string ElapsedTime(long);  // TODO: See src/format.cpp
-std::string KBisMB(float);
+std::string Kb2Mb(float);
 };                                    // namespace Format
 
 #endif

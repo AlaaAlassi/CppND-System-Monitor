@@ -241,7 +241,7 @@ string LinuxParser::Ram(int pid) {
       }
     }
   }
-  return (Format::KBisMB(ramUsage));
+  return (Format::Kb2Mb(ramUsage));
    }
 
 // TODO: Read and return the user ID associated with a process
