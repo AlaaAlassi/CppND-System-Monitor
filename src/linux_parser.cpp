@@ -301,4 +301,20 @@ int maxIterations = 100;
 
 // TODO: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::UpTime(int pid[[maybe_unused]]) { return 0; }
+long LinuxParser::UpTime(int pid) { 
+  std::string kprocessDirectory = "/"+std::to_string(pid);
+  std::ifstream fileBuffer(kProcDirectory +kprocessDirectory+kStatFilename);
+  std::string line;
+  std::string field;
+  int maxIterations = 22;
+  if (fileBuffer.is_open())
+  {
+    std::getline(fileBuffer,line);
+    std::istringstream linestream(line);
+    for(int i=0; i<maxIterations;i++)
+    {
+      linestream >> field;
+    }
+  }
+  return std::stol(field);
+}
