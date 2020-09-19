@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cmath>
 #include"format.h"
+#include <unistd.h>
 
 #include "linux_parser.h"
 
@@ -316,5 +317,5 @@ long LinuxParser::UpTime(int pid) {
       linestream >> field;
     }
   }
-  return std::stol(field);
+  return std::stol(field)/sysconf(_SC_CLK_TCK);
 }
