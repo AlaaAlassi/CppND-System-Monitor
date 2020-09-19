@@ -4,8 +4,8 @@
 #include <iostream>
 
 int main() {
-  std::vector<Process> processes;
-  int n = 20;
+ std::vector<Process> processes;
+  int n = 10;
   std::vector<int> pidVector = LinuxParser::Pids();
         for (auto pid:pidVector){
          processes.push_back(Process(pid));
@@ -14,7 +14,9 @@ int main() {
   std::vector<Process>::const_iterator last = processes.end();
   std::vector<Process> subProc(first, last);
   System system;
+  std::vector<Process> testpro;
+  testpro.push_back(3867);
   system.SetProcesses(subProc);
-  NCursesDisplay::Display(system,n);
-  //std::cout <<  LinuxParser::UpTime(33) << "\n";
+ NCursesDisplay::Display(system,n);
+
 }
