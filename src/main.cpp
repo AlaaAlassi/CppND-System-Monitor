@@ -14,8 +14,6 @@ int main() {
  std::sort(processes.begin(),processes.end());
  std::reverse(processes.begin(),processes.end());
  System system;
- std::vector<Process> testpro;
- testpro.push_back(3867);
  system.SetProcesses(processes);
  NCursesDisplay::Display(system,n);
 
