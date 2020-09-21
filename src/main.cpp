@@ -18,4 +18,5 @@ int main() {
  testpro.push_back(3867);
  system.SetProcesses(processes);
  NCursesDisplay::Display(system,n);
+
 }
