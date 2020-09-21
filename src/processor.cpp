@@ -5,8 +5,12 @@
 using LinuxParser::CPUStates;
 
 float Processor::Utilization() {
-  long activeJiffies= LinuxParser::ActiveJiffies();
+  long idleJiffies = LinuxParser::IdleJiffies();
   long total = LinuxParser::Jiffies();
-   float utilization = ((float)activeJiffies/(float)total);
+  long deltaIdle = idleJiffies - this->idleJiffiesOld_;
+  long deltaTotal = total - this->totalOld_;
+  float utilization = ((float)(deltaTotal - deltaIdle)/(float)deltaTotal);
+  this->idleJiffiesOld_ = idleJiffies;
+  this->totalOld_ = total;
   return utilization;
 }
