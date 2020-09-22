@@ -323,5 +323,6 @@ long LinuxParser::UpTime(int pid) {
       linestream >> field;
     }
   }
-  return std::stol(field)/sysconf(_SC_CLK_TCK);
+
+  return UpTime() - (std::stol(field)/sysconf(_SC_CLK_TCK));
 }
