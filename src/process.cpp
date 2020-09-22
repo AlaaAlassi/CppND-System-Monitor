@@ -38,13 +38,12 @@ float Process::CpuUtilization() const{
     int const stimeIndex = 15-1;
     int const cutimeIndex = 16-1;
     int const cstimeIndex = 17-1;
-    int const maxIterations = 100;
     std::vector<std::string> statVector;
     if (fileBuffer.is_open())
   {
     std::getline(fileBuffer,line);
     std::istringstream linestream(line);
-    for(int i=0; i<maxIterations;i++)
+    for(int i=0; i<=cstimeIndex;i++)
     {
       linestream >> field;
       if(field.size() == 0){break;};
